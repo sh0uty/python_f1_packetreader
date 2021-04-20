@@ -1,7 +1,4 @@
 import argparse
-import socket
-from f1_2020_telemetry.packets import unpack_udp_packet
-import sys, os
 import packetreader
 
 parser = argparse.ArgumentParser(prog="F1-2020-Telemetry udp reciever", description="Collects telemetry data from F1 2020 udp server")
