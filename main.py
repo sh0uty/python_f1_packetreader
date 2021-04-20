@@ -1,6 +1,5 @@
 import argparse
 import socket
-import keyboard
 from f1_2020_telemetry.packets import unpack_udp_packet
 
 def main():
@@ -11,9 +10,7 @@ def main():
     print("Started UDP listener on Port 20777")
 
     while True:
-        print("Inside Loop") 
         udp_p = udp_s.recv(2048)
-        print("Recieved Data from F1-2020")
         packet = unpack_udp_packet(udp_p)
         print("Recieved: ", packet)
         print()
