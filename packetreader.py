@@ -1,6 +1,6 @@
-import threading
 import socket
 import math
+import keyboard
 from f1_2020_telemetry.packets import unpack_udp_packet, PacketID
 
 class PacketReader():
@@ -23,7 +23,7 @@ class PacketReader():
         print(f"packetreader started on port {self.port}")
 
         try:
-            while True:
+            while not (keyboard.is_pressed('q')) :
                 packed_packet = sock.recv(2048)
                 packet = unpack_udp_packet(packed_packet)
                 self.GetDataFromPacket(packet)
