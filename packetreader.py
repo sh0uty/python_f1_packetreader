@@ -1,6 +1,8 @@
 import socket
 import math
+import sys
 import keyboard
+import time
 from f1_2020_telemetry.packets import unpack_udp_packet, PacketID
 
 class PacketReader():
@@ -9,12 +11,8 @@ class PacketReader():
         self.port = port
         self.frame = None
         self.frame_data = {}
-
-        self.player_car_speed = 0
-        self.player_car_engineRPM = 0
-        self.player_car_throttle = 0
-        self.player_car_brake = 0
-        self.player_car_drs = 0
+        self.bestLapTimeList = []
+        self.distance
             
     def run(self):
         sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
@@ -51,17 +49,33 @@ class PacketReader():
 
         #Get all stuff here with try execpt
 
-
         try:
             if PacketID.CAR_TELEMETRY in self.frame_data:
-                self.player_car_speed = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].speed )
-                self.player_car_engineRPM = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].engineRPM )
-                self.player_car_throttle = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].throttle )
-                self.player_car_brake = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].brake )
-                self.player_car_drs = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].drs )
+                self.speed = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].speed )
+                self.gear = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].gear )
+                self.engineRPM = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].engineRPM )
+                self.throttle = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].throttle )
+                self.brake = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].brake )
+                self.drs = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].drs )
+                self.tyresInnerTemperature = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].tyresInnerTemperature )
+            if PacketID.CAR_STATUS in self.frame_data:
+                self.fuelRemainingLaps = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].fuelRemainingLaps )
+                self.ersStoreEnergy = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersStoreEnergy )
+                self.ersDeployMode = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersDeployMode )
+                self.ersDeployedThisLap = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersDeployedThisLap )
+                self.ersHarvestedThisLapMGUK = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUK )
+                self.ersHarvestedThisLapMGUH = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUH )
+            if PacketID.LAP_DATA in self.frame_data:
+                self.lastLapTime =  ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].lastLapTime )
+                self.currentLapTime =  ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapTime )
+                self.bestLapTime = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].bestLapTime )
+                self.carPosition = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].carPosition )
+                self.currentLapNum = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapNum )
+
         except KeyError:
             pass
 
         #until here
 
-        print(f"Speed: {self.player_car_speed}, RPM: {self.player_car_engineRPM}, Throttle: {self.player_car_throttle}, Brake: {self.player_car_brake}, DRS: {self.player_car_drs}")
+        # print(f"Speed: {self.speed}, Gear: {self.gear}, RPM: {self.engineRPM}, Throttle: {self.throttle}, Brake: {self.brake}, DRS: {self.drs}, TyresInnterTemperature: {list(self.tyresInnerTemperature)}")
+        #print(f"FuelRemainingLaps: {self.fuelRemainingLaps}, ErsStoreEnergy {self.ersStoreEnergy}, ErsDeployMode {self.ersDeployMode}, ErsDeployedThisLap {self.ersDeployedThisLap}. ErsHarvestedThisLapMGUK {self.ersHarvestedThisLapMGUK}, ErsHarvestedThisLapMGUH {self.ersHarvestedThisLapMGUH}")

@@ -11,6 +11,7 @@ def main():
     pr = packetreader.PacketReader(args.ip, args.port)
     prthread = Thread(target=pr.run)
     prthread.start()
+    
 
 if __name__ == '__main__':
     main()
