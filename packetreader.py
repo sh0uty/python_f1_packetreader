@@ -11,9 +11,7 @@ class PacketReader():
         self.port = port
         self.frame = None
         self.frame_data = {}
-        self.bestLapTimeList = []
-        self.distance
-            
+
     def run(self):
         sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         sock.bind((self.ip, self.port))
@@ -71,11 +69,10 @@ class PacketReader():
                 self.bestLapTime = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].bestLapTime )
                 self.carPosition = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].carPosition )
                 self.currentLapNum = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapNum )
-
         except KeyError:
             pass
 
         #until here
 
-        # print(f"Speed: {self.speed}, Gear: {self.gear}, RPM: {self.engineRPM}, Throttle: {self.throttle}, Brake: {self.brake}, DRS: {self.drs}, TyresInnterTemperature: {list(self.tyresInnerTemperature)}")
-        #print(f"FuelRemainingLaps: {self.fuelRemainingLaps}, ErsStoreEnergy {self.ersStoreEnergy}, ErsDeployMode {self.ersDeployMode}, ErsDeployedThisLap {self.ersDeployedThisLap}. ErsHarvestedThisLapMGUK {self.ersHarvestedThisLapMGUK}, ErsHarvestedThisLapMGUH {self.ersHarvestedThisLapMGUH}")
+        #print(f"Speed: {self.speed}, Gear: {self.gear}, RPM: {self.engineRPM}, Throttle: {self.throttle}, Brake: {self.brake}, DRS: {self.drs}, TyresInnterTemperature: {list(self.tyresInnerTemperature)}")
+        print(f"FuelRemainingLaps: {self.fuelRemainingLaps}, ErsStoreEnergy {self.ersStoreEnergy}, ErsDeployMode {self.ersDeployMode}, ErsDeployedThisLap {self.ersDeployedThisLap}. ErsHarvestedThisLapMGUK {self.ersHarvestedThisLapMGUK}, ErsHarvestedThisLapMGUH {self.ersHarvestedThisLapMGUH}")
