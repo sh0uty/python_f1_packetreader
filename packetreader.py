@@ -1,8 +1,8 @@
 import socket
-import math
 import sys
 import keyboard
 import time
+import selectors
 from f1_2020_telemetry.packets import unpack_udp_packet, PacketID
 
 class PacketReader():
@@ -11,23 +11,49 @@ class PacketReader():
         self.port = port
         self.frame = None
         self.frame_data = {}
+        self.socketpair = socket.socketpair()
+        self.endSignalFlag = False
+    
+    def endSignal(self):
+        while not self.endSignalFlag:
+            if (keyboard.is_pressed('q')):
+                self.endSignalFlag = True
+                print("Q-key pressed. Attempting to quit now")
+                self.socketpair[1].send(b'\x00')
+
 
     def run(self):
         sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         sock.bind((self.ip, self.port))
 
-        print(f"packetreader started on port {self.port}")
+        print(f"Packetreader started on port {self.port}")
 
-        try:
-            while not (keyboard.is_pressed('q')) :
-                packed_packet = sock.recv(2048)
-                packet = unpack_udp_packet(packed_packet)
-                self.GetDataFromPacket(packet)
-        except KeyboardInterrupt:
-            self.CreateDataForDisplay()
+        selects = selectors.DefaultSelector()
+        key_sock = selects.register(sock, selectors.EVENT_READ)
+        key_socketpair = selects.register(self.socketpair[0], selectors.EVENT_READ)
 
-            sock.close()
-            print("stopped packetreader")
+        print(f"Initialized selectors and keys. Going into main loop now")
+
+        end = False
+        while not end:
+            for (key, mask) in selects.select():
+                if key == key_sock:
+                    packed_packet = sock.recv(2048)
+                    packet = unpack_udp_packet(packed_packet)
+                    self.GetDataFromPacket(packet)
+                elif key == key_socketpair:
+                    end = True
+
+        print("Packetreader main loop exit")
+
+        self.CreateDataForDisplay()
+
+        selects.close()
+        sock.close()
+        for s in self.socketpair:
+            s.close()
+
+        print("Closed every connction")
 
     def GetDataFromPacket(self, packet):
 

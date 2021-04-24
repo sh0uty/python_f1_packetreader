@@ -10,7 +10,23 @@ args = parser.parse_args()
 def main():
     pr = packetreader.PacketReader(args.ip, args.port)
     prthread = Thread(target=pr.run)
+    quitthread = Thread(target=pr.endSignal)
+
     prthread.start()
+
+    print("Packetreader thread started")
+
+    quitthread.start()
+
+    print("EndSignal thread started")
+
+    print("Joining both threads now")
+    
+    prthread.join()
+    quitthread.join()
+
+
+    print("Both threads closed. Quitting now")
     
 
 if __name__ == '__main__':
