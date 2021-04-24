@@ -1,7 +1,7 @@
 import socket
 import sys
 import keyboard
-import time
+import logging
 import selectors
 from f1_2020_telemetry.packets import unpack_udp_packet, PacketID
 
@@ -13,26 +13,19 @@ class PacketReader():
         self.frame_data = {}
         self.socketpair = socket.socketpair()
         self.endSignalFlag = False
-    
-    def endSignal(self):
-        while not self.endSignalFlag:
-            if (keyboard.is_pressed('q')):
-                self.endSignalFlag = True
-                print("Q-key pressed. Attempting to quit now")
-                self.socketpair[1].send(b'\x00')
-
+        logging.basicConfig(format="%(levelname)s - %(message)s", level=logging.DEBUG)
 
     def run(self):
         sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         sock.bind((self.ip, self.port))
 
-        print(f"Packetreader started on port {self.port}")
+        logging.info(f"Packetreader started on port {self.port}")
 
         selects = selectors.DefaultSelector()
         key_sock = selects.register(sock, selectors.EVENT_READ)
         key_socketpair = selects.register(self.socketpair[0], selectors.EVENT_READ)
 
-        print(f"Initialized selectors and keys. Going into main loop now")
+        logging.info(f"Initialized selectors and keys. Going into main loop now")
 
         end = False
         while not end:
@@ -44,7 +37,7 @@ class PacketReader():
                 elif key == key_socketpair:
                     end = True
 
-        print("Packetreader main loop exit")
+        logging.info("Packetreader main loop exit")
 
         self.CreateDataForDisplay()
 
@@ -53,7 +46,7 @@ class PacketReader():
         for s in self.socketpair:
             s.close()
 
-        print("Closed every connction")
+        logging.info("Closed every connction")
 
     def GetDataFromPacket(self, packet):
 
@@ -102,3 +95,10 @@ class PacketReader():
 
         #print(f"Speed: {self.speed}, Gear: {self.gear}, RPM: {self.engineRPM}, Throttle: {self.throttle}, Brake: {self.brake}, DRS: {self.drs}, TyresInnterTemperature: {list(self.tyresInnerTemperature)}")
         #print(f"FuelRemainingLaps: {self.fuelRemainingLaps}, ErsStoreEnergy {self.ersStoreEnergy}, ErsDeployMode {self.ersDeployMode}, ErsDeployedThisLap {self.ersDeployedThisLap}. ErsHarvestedThisLapMGUK {self.ersHarvestedThisLapMGUK}, ErsHarvestedThisLapMGUH {self.ersHarvestedThisLapMGUH}")
+
+    def endSignal(self):
+        while not self.endSignalFlag:
+            if (keyboard.is_pressed('q')):
+                self.endSignalFlag = True
+                logging.info("Q-key pressed. Attempting to quit now")
+                self.socketpair[1].send(b'\x00')
