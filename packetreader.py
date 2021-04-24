@@ -13,7 +13,6 @@ class PacketReader():
         self.frame_data = {}
         self.socketpair = socket.socketpair()
         self.endSignalFlag = False
-        logging.basicConfig(format="%(levelname)s - %(message)s", level=logging.DEBUG)
 
     def run(self):
         sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
