@@ -67,28 +67,49 @@ class PacketReader():
 
         try:
             if PacketID.CAR_TELEMETRY in self.frame_data:
-                self.speed = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].speed )
-                self.gear = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].gear )
-                self.engineRPM = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].engineRPM )
-                self.throttle = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].throttle )
-                self.brake = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].brake )
-                self.drs = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].drs )
-                self.tyresInnerTemperature = ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].tyresInnerTemperature )
+                self.speed = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].speed )
+                self.gear = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].gear )
+                self.engineRPM = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].engineRPM )
+                self.throttle = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].throttle )
+                self.brake = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].brake )
+                self.drs = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].drs )
+                self.tyresInnerTemperature = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].tyresInnerTemperature )
+
             if PacketID.CAR_STATUS in self.frame_data:
-                self.fuelRemainingLaps = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].fuelRemainingLaps )
-                self.ersStoreEnergy = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersStoreEnergy )
-                self.ersDeployMode = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersDeployMode )
-                self.ersDeployedThisLap = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersDeployedThisLap )
-                self.ersHarvestedThisLapMGUK = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUK )
-                self.ersHarvestedThisLapMGUH = ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUH )
+                self.fuelRemainingLaps = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].fuelRemainingLaps )
+                self.ersStoreEnergy = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersStoreEnergy )
+                self.ersDeployMode = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersDeployMode )
+                self.ersDeployedThisLap = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersDeployedThisLap )
+                self.ersHarvestedThisLapMGUK = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUK )
+                self.ersHarvestedThisLapMGUH = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUH )
+
             if PacketID.LAP_DATA in self.frame_data:
-                self.lastLapTime =  ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].lastLapTime )
-                self.currentLapTime =  ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapTime )
-                self.bestLapTime = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].bestLapTime )
-                self.carPosition = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].carPosition )
-                self.currentLapNum = ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapNum )
+                self.lastLapTime = \
+                    ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].lastLapTime )
+                self.currentLapTime = \
+                    ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapTime )
+                self.bestLapTime = \
+                    ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].bestLapTime )
+                self.carPosition = \
+                    ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].carPosition )
+                self.currentLapNum = \
+                    ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapNum )
+
         except KeyError:
-            pass
+            logging.warning("Package could not be read correctly. Skipping!")
 
         #until here
 
