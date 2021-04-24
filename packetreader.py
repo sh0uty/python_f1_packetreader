@@ -113,7 +113,7 @@ class PacketReader():
 
         #until here
 
-        #print(f"Speed: {self.speed}, Gear: {self.gear}, RPM: {self.engineRPM}, Throttle: {self.throttle}, Brake: {self.brake}, DRS: {self.drs}, TyresInnterTemperature: {list(self.tyresInnerTemperature)}")
+        print(f"Speed: {self.speed}, Gear: {self.gear}, RPM: {self.engineRPM}, Throttle: {self.throttle}, Brake: {self.brake}, DRS: {self.drs}, TyresInnterTemperature: {list(self.tyresInnerTemperature)}")
         #print(f"FuelRemainingLaps: {self.fuelRemainingLaps}, ErsStoreEnergy {self.ersStoreEnergy}, ErsDeployMode {self.ersDeployMode}, ErsDeployedThisLap {self.ersDeployedThisLap}. ErsHarvestedThisLapMGUK {self.ersHarvestedThisLapMGUK}, ErsHarvestedThisLapMGUH {self.ersHarvestedThisLapMGUH}")
 
     def endSignal(self):
