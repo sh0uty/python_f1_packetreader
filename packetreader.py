@@ -20,15 +20,15 @@ class PacketReader():
 
         logging.info(f"Packetreader started on port {self.port}")
 
-        selects = selectors.DefaultSelector()
-        key_sock = selects.register(sock, selectors.EVENT_READ)
-        key_socketpair = selects.register(self.socketpair[0], selectors.EVENT_READ)
+        selector = selectors.DefaultSelector()
+        key_sock = selector.register(sock, selectors.EVENT_READ)
+        key_socketpair = selector.register(self.socketpair[0], selectors.EVENT_READ)
 
         logging.info(f"Initialized selectors and keys. Going into main loop now")
 
         end = False
         while not end:
-            for (key, mask) in selects.select():
+            for (key, mask) in selector.select():
                 if key == key_sock:
                     packed_packet = sock.recv(2048)
                     packet = unpack_udp_packet(packed_packet)
@@ -40,7 +40,7 @@ class PacketReader():
 
         self.CreateDataForDisplay()
 
-        selects.close()
+        selector.close()
         sock.close()
         for s in self.socketpair:
             s.close()
