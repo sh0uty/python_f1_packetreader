@@ -29,14 +29,14 @@ class PacketReader():
 
         logging.info(f"Packetreader started on port {self.port}")
 
-        # Initializing selectors and registering UDP socket and one socket of the socketpair for exit signal
+        # Initializing selectors and registering UDP socket and one socket of the socketpair for end signal
         selector = selectors.DefaultSelector()
         key_sock = selector.register(sock, selectors.EVENT_READ)
         key_socketpair = selector.register(self.socketpair[0], selectors.EVENT_READ)
 
         logging.info(f"Initialized selectors and keys. Going into main loop now")
 
-        # Main Loop for receiving from UDP socket and checking if exit signal is send
+        # Main Loop for receiving from UDP socket and checking if end signal is send
         end = False
         while not end:
             for (key, mask) in selector.select():
