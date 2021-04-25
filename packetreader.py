@@ -1,6 +1,6 @@
 import socket
 import sys
-import keyboard
+from pynput import keyboard
 import logging
 import selectors
 from f1_2020_telemetry.packets import unpack_udp_packet, PacketID
@@ -35,6 +35,9 @@ class PacketReader():
         key_socketpair = selector.register(self.socketpair[0], selectors.EVENT_READ)
 
         logging.info(f"Initialized selectors and keys. Going into main loop now")
+
+        with keyboard.Listener(on_press=self.endSignal) as listener:
+            listener.join()
 
         # Main Loop for receiving from UDP socket and checking if end signal is send
         end = False
@@ -136,9 +139,9 @@ class PacketReader():
         # END TESTDATA
 
     # Send end signal if q-key is pressed
-    def endSignal(self):
-        while True:
-            if (keyboard.is_pressed('q')):
+    def endSignal(self, key):
+        if 'char' in dir(key):
+            if key.char == 'q':
                 logging.info("Q-key pressed. Attempting to quit now")
                 self.socketpair[1].send(b'\x00')
-                break
+                return False
