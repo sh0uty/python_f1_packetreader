@@ -117,8 +117,8 @@ class PacketReader():
         #print(f"FuelRemainingLaps: {self.fuelRemainingLaps}, ErsStoreEnergy {self.ersStoreEnergy}, ErsDeployMode {self.ersDeployMode}, ErsDeployedThisLap {self.ersDeployedThisLap}. ErsHarvestedThisLapMGUK {self.ersHarvestedThisLapMGUK}, ErsHarvestedThisLapMGUH {self.ersHarvestedThisLapMGUH}")
 
     def endSignal(self):
-        while not self.endSignalFlag:
+        while True:
             if (keyboard.is_pressed('q')):
-                self.endSignalFlag = True
                 logging.info("Q-key pressed. Attempting to quit now")
                 self.socketpair[1].send(b'\x00')
+                break;
