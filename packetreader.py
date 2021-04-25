@@ -141,4 +141,4 @@ class PacketReader():
             if (keyboard.is_pressed('q')):
                 logging.info("Q-key pressed. Attempting to quit now")
                 self.socketpair[1].send(b'\x00')
-                break;
+                break
