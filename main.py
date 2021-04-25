@@ -14,24 +14,15 @@ def main():
 
     pr = packetreader.PacketReader(args.ip, args.port)
     prthread = Thread(target=pr.run)
-    #quitthread = Thread(target=pr.endSignal)
 
     prthread.start()
 
     logging.info("Packetreader thread started")
-
-    #quitthread.start()
-
-    logging.info("EndSignal thread started")
-
-    logging.info("Joining both threads now")
+    logging.info("Joining thread now")
     
     prthread.join()
-    #quitthread.join()
-
 
     logging.info("Both threads closed. Quitting now")
-    
 
 if __name__ == '__main__':
     main()
