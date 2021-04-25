@@ -36,8 +36,8 @@ class PacketReader():
 
         logging.info(f"Initialized selectors and keys. Going into main loop now")
 
-        with keyboard.Listener(on_press=self.endSignal) as listener:
-            listener.join()
+        listener =  keyboard.Listener(on_press=self.endSignal)
+        listener.start()
 
         # Main Loop for receiving from UDP socket and checking if end signal is send
         end = False
