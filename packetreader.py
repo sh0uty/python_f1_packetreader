@@ -19,6 +19,27 @@ class PacketReader():
         self.frame_data = {}
         self.socketpair = socket.socketpair()
 
+        self.speed = 0
+        self.gear = 0
+        self.engineRPM = 0
+        self.throttle = 
+        self.brake = 0
+        self.drs = 0
+        self.tyresInnerTemperature = None
+
+        self.fuelRemainingLaps = 0
+        self.ersStoreEnergy = 0
+        self.ersDeployMode = 0
+        self.ersDeployedThisLap = 0
+        self.ersHarvestedThisLapMGUK = 0
+        self.ersHarvestedThisLapMGUH = 0
+
+        self.lastLapTime = 0
+        self.currentLapTime = 0
+        self.bestLapTime = 0
+        self.carPosition = 0
+        self.currentLapNum = 0
+
     # Quellen für Methode run:
         # Multiplexende Server https://openbook.rheinwerk-verlag.de/python/34_001.html#u34.1.8
     def run(self):
