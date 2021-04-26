@@ -22,7 +22,7 @@ class PacketReader():
         self.speed = 0
         self.gear = 0
         self.engineRPM = 0
-        self.throttle = 
+        self.throttle = 0
         self.brake = 0
         self.drs = 0
         self.tyresInnerTemperature = None
