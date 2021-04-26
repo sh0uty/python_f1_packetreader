@@ -81,10 +81,9 @@ class PacketReader():
         # Combine all packages
         all_packets = next(iter(self.frame_data.values()))
 
-        # TESTDATA
-
         player_car = all_packets.header.playerCarIndex
 
+        # Trying to set all data received from packets
         try:
             if PacketID.CAR_TELEMETRY in self.frame_data:
                 self.speed = \
@@ -130,13 +129,6 @@ class PacketReader():
 
         except KeyError:
             logging.warning("Package could not be read correctly. Skipping!")
-
-        
-
-        print(f"Speed: {self.speed}, Gear: {self.gear}, RPM: {self.engineRPM}, Throttle: {self.throttle}, Brake: {self.brake}, DRS: {self.drs}, TyresInnterTemperature: {list(self.tyresInnerTemperature)}")
-        #print(f"FuelRemainingLaps: {self.fuelRemainingLaps}, ErsStoreEnergy {self.ersStoreEnergy}, ErsDeployMode {self.ersDeployMode}, ErsDeployedThisLap {self.ersDeployedThisLap}. ErsHarvestedThisLapMGUK {self.ersHarvestedThisLapMGUK}, ErsHarvestedThisLapMGUH {self.ersHarvestedThisLapMGUH}")
-
-        # END TESTDATA
 
     # Send end signal if q-key is pressed
     def endSignal(self, key):
