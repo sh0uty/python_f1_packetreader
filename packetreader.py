@@ -39,6 +39,10 @@ class PacketReader():
         self.bestLapTime = 0
         self.carPosition = 0
         self.currentLapNum = 0
+        self.lapDistance = 0
+
+        self.bestLapData = {}
+        self.currentLapData = {}
 
     # Quellen für Methode run:
         # Multiplexende Server https://openbook.rheinwerk-verlag.de/python/34_001.html#u34.1.8
@@ -147,6 +151,9 @@ class PacketReader():
                     ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].carPosition )
                 self.currentLapNum = \
                     ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].currentLapNum )
+                self.lapDistance = \
+                    ( self.frame_data[PacketID.LAP_DATA].lapData[player_car].lapDistance )
+
 
         except KeyError:
             logging.warning("Package could not be read correctly. Skipping!")
