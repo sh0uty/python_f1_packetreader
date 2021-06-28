@@ -139,6 +139,8 @@ class PacketReader():
                     ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUK )
                 self.ersHarvestedThisLapMGUH = \
                     ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUH )
+                self.fuelInTank = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].fuelInTank )
 
             if PacketID.LAP_DATA in self.frame_data:
                 self.lastLapTime = \
