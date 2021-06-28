@@ -26,6 +26,8 @@ class PacketReader():
         self.brake = 0
         self.drs = 0
         self.tyresInnerTemperature = None
+        self.tyresSurfaceTemperature = None
+        self.brakesTemperature = None
 
         self.fuelRemainingLaps = 0
         self.ersStoreEnergy = 0
@@ -34,6 +36,7 @@ class PacketReader():
         self.ersHarvestedThisLapMGUK = 0
         self.ersHarvestedThisLapMGUH = 0
         self.fuelInTank = 0
+        self.tyresWear = None
 
         self.lastLapTime = 0
         self.currentLapTime = 0
@@ -126,6 +129,10 @@ class PacketReader():
                     ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].drs )
                 self.tyresInnerTemperature = \
                     ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].tyresInnerTemperature )
+                self.tyresSurfaceTemperature = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].tyresSurfaceTemperature )
+                self.brakesTemperature = \
+                    ( self.frame_data[PacketID.CAR_TELEMETRY].carTelemetryData[player_car].brakesTemperature )
 
             if PacketID.CAR_STATUS in self.frame_data:
                 self.fuelRemainingLaps = \
@@ -142,6 +149,8 @@ class PacketReader():
                     ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].ersHarvestedThisLapMGUH )
                 self.fuelInTank = \
                     ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].fuelInTank )
+                self.tyresWear = \
+                    ( self.frame_data[PacketID.CAR_STATUS].carStatusData[player_car].tyresWear )
 
             if PacketID.LAP_DATA in self.frame_data:
                 self.lastLapTime = \
