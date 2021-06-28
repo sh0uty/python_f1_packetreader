@@ -33,6 +33,7 @@ class PacketReader():
         self.ersDeployedThisLap = 0
         self.ersHarvestedThisLapMGUK = 0
         self.ersHarvestedThisLapMGUH = 0
+        self.fuelInTank = 0
 
         self.lastLapTime = 0
         self.currentLapTime = 0
